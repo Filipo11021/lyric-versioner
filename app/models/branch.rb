@@ -6,4 +6,19 @@ class Branch < ApplicationRecord
                    uniqueness: { scope: :song_id, message: "already exists for this song" },
                    length: { minimum: 1, maximum: 100 }
   validates :song, presence: true
+
+  def commit(message:, content:, author_name:)
+    transaction do
+      new_commit = Commit.create!(
+        song: song,
+        parent_commit: head_commit,
+        message: message,
+        content: content,
+        author_name: author_name,
+        timestamp: Time.current
+      )
+      update!(head_commit: new_commit)
+      new_commit
+    end
+  end
 end
