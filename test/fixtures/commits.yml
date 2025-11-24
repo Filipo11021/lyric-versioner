@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  song: one
+  parent_commit: 
+  message: Initial commit
+  content: First draft of lyrics
+  author_name: Artist One
+  timestamp: 2025-11-24 19:10:26
+
+two:
+  song: one
+  parent_commit: one
+  message: Added chorus
+  content: First draft plus chorus
+  author_name: Artist One
+  timestamp: 2025-11-24 19:12:26
