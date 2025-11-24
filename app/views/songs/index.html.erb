@@ -1,0 +1,9 @@
+<main class="container mx-auto mt-28 px-5 flex">
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8">Songs</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <%= render partial: "songs/card", collection: @songs, as: :song %>
+    </div>
+  </div>
+</main>

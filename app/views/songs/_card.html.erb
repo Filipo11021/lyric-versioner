@@ -1,0 +1,25 @@
+<%# locals: (song:) %>
+<div class="bg-white border border-gray-200 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200 p-6 flex flex-col justify-between h-full">
+  <div class="mb-4">
+    <h2 class="text-xl font-semibold text-gray-900 truncate" title="<%= song.title %>">
+      <%= song.title %>
+    </h2>
+  </div>
+
+  <div class="flex items-center justify-between mt-auto pt-4 border-t border-gray-100 text-sm text-gray-500">
+    <div class="flex items-center">
+      <%= render "songs/branch_icon" %>
+      <span><%= song.branches.count %> branches</span>
+    </div>
+
+    <div class="flex items-center" title="Latest commit: <%= song.latest_commit&.timestamp %>">
+      <% if song.latest_commit %>
+        <%= render "songs/clock_icon" %>
+        <span><%= song.latest_commit.timestamp.strftime("%b %d, %Y") %></span>
+      <% else %>
+        <span class="italic text-gray-400">No commits</span>
+      <% end %>
+    </div>
+  </div>
+</div>
+
