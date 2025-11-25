@@ -1,0 +1,20 @@
+<%# locals: (branches:, song:, branch_name:) %>
+<div class="space-y-2">
+  <% branches.each do |branch| %>
+    <%= link_to song_path(song, branch: branch.name),
+                class: "group block p-3 rounded-lg border transition-all #{branch.name == branch_name ? 'bg-blue-50 border-blue-200 shadow-sm' : 'bg-white border-gray-200 hover:border-blue-300 hover:shadow-sm'}" do %>
+      <div class="flex justify-between items-center mb-1">
+           <span class="text-sm font-medium <%= branch.name == branch_name ? 'text-blue-900' : 'text-gray-900' %>">
+             <%= branch.name %>
+           </span>
+        <% if branch.name == branch_name %>
+          <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-blue-700 bg-blue-100 rounded-full">Current</span>
+        <% end %>
+      </div>
+      <div class="flex items-center gap-2 text-xs text-gray-500">
+        <%= render "songs/icons/update_icon" %>
+        <span>Updated <%= time_ago_in_words(branch.updated_at) %> ago</span>
+      </div>
+    <% end %>
+  <% end %>
+</div>

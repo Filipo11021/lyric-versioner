@@ -1,0 +1,33 @@
+<%# locals: (commits:) %>
+<% if commits.any? %>
+  <div class="space-y-0">
+    <% commits.each_with_index do |commit, index| %>
+      <div class="relative pl-6 pb-6 last:pb-0 group">
+        <% unless index == commits.size - 1 %>
+          <div class="absolute left-[9px] top-3 bottom-0 w-px bg-gray-200 group-last:hidden"></div>
+        <% end %>
+
+
+        <div class="absolute left-[5px] top-1.5 w-2.5 h-2.5 rounded-full border-2 border-white ring-1 ring-gray-300 bg-white group-first:bg-blue-500 group-first:ring-blue-500"></div>
+
+        <div class="bg-white p-3 rounded-lg border border-gray-200 shadow-sm hover:border-blue-300 transition-colors cursor-pointer">
+          <div class="mb-1">
+            <p class="text-sm font-medium text-gray-900 line-clamp-1"><%= commit.message %></p>
+          </div>
+          <div class="flex items-center justify-between text-xs text-gray-500">
+            <div class="flex items-center gap-1">
+              <%= render "songs/icons/history_icon" %>
+              <span><%= time_ago_in_words(commit.timestamp) %> ago</span>
+            </div>
+            <span><%= commit.author_name %></span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center py-10 text-gray-500 text-sm">
+    No history yet.
+  </div>
+<% end %>
+

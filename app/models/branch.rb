@@ -21,4 +21,14 @@ class Branch < ApplicationRecord
       new_commit
     end
   end
+
+  def history
+    commits = []
+    current = head_commit
+    while current
+      commits << current
+      current = current.parent_commit
+    end
+    commits
+  end
 end
