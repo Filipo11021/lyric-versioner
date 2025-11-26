@@ -9,7 +9,7 @@ class Song < ApplicationRecord
   after_create :create_main_branch
 
   def default_branch
-    branches.find_by(name: 'main')
+    branches.find_by(name: "main")
   end
 
   def latest_commit
@@ -19,6 +19,6 @@ class Song < ApplicationRecord
   private
 
   def create_main_branch
-    branches.create!(name: 'main')
+    branches.create!(name: "main")
   end
 end
