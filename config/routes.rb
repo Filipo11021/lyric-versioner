@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-  # root "posts#index"
-  resources :songs, only: [ :index, :show, :update ]
+  root to: redirect("/songs")
+  resources :songs, only: [ :index, :show, :update ] do
+    resources :branches, only: [ :create ]
+  end
 end

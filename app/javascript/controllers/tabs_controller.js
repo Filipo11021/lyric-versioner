@@ -4,62 +4,75 @@ export default class extends Controller {
   static targets = ["tab", "panel"];
 
   connect() {
-    // Show first tab by default if none active
-    if (
-      !this.tabTargets.some((tab) => tab.classList.contains("border-blue-500"))
-    ) {
-      this.showTab(this.tabTargets[0].dataset.tab);
+    const isAnyTabSelected = this.tabTargets.some(
+      (tab) => tab.getAttribute("aria-selected") === "true"
+    );
+
+    if (!isAnyTabSelected) {
+      const nameOfFirstTab = this.getTabName(this.tabTargets[0]);
+      this.showTab(nameOfFirstTab);
     }
   }
 
+  /**
+   * @param {KeyboardEvent} event
+   */
   switch(event) {
     event.preventDefault();
-    this.showTab(event.currentTarget.dataset.tab);
+    this.showTab(this.getTabName(event.currentTarget));
   }
 
-  showTab(tabName) {
-    this.tabTargets.forEach((tab) => {
-      if (tab.dataset.tab === tabName) {
-        tab.classList.add("border-blue-500", "text-blue-600");
-        tab.classList.remove(
-          "border-transparent",
-          "text-gray-500",
-          "hover:text-gray-700"
-        );
-      } else {
-        tab.classList.remove("border-blue-500", "text-blue-600");
-        tab.classList.add(
-          "border-transparent",
-          "text-gray-500",
-          "hover:text-gray-700"
-        );
-      }
-    });
+  /**
+   * @param {KeyboardEvent} event
+   */
+  keydown(event) {
+    const target = event.currentTarget;
+    const index = this.tabTargets.indexOf(target);
+    let newIndex = index;
 
-    this.panelTargets.forEach((panel) => {
-      if (panel.dataset.panel === tabName) {
+    switch (event.key) {
+      case "ArrowLeft":
+        event.preventDefault();
+        newIndex = index - 1;
+        if (newIndex < 0) newIndex = this.tabTargets.length - 1;
+        break;
+      case "ArrowRight":
+        event.preventDefault();
+        newIndex = index + 1;
+        if (newIndex >= this.tabTargets.length) newIndex = 0;
+        break;
+      default:
+        return;
+    }
+
+    const newTab = this.tabTargets[newIndex];
+    this.showTab(this.getTabName(newTab));
+    newTab.focus();
+  }
+
+  /**
+   * @param {HTMLElement} tab
+   * @returns {string}
+   */
+  getTabName(tab) {
+    return tab.dataset.tab;
+  }
+
+  /**
+   * @param {string} selectedTabName
+   */
+  showTab(selectedTabName) {
+    for (const tab of this.tabTargets) {
+      const isSelected = tab.dataset.tab === selectedTabName;
+      tab.setAttribute("aria-selected", isSelected);
+    }
+
+    for (const panel of this.panelTargets) {
+      if (panel.dataset.panel === selectedTabName) {
         panel.classList.remove("hidden");
       } else {
         panel.classList.add("hidden");
       }
-    });
+    }
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

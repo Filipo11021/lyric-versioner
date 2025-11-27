@@ -1,0 +1,18 @@
+<%# locals: (name:, content:, aria_controls:, id:, aria_selected: false) %>
+<button
+  class="
+    flex-1 py-3 border-b-2 px-4 text-center focus:outline-none
+    border-transparent hover:text-gray-700
+    aria-selected:border-blue-500 aria-selected:text-blue-600
+  "
+  data-tabs-target="tab"
+  data-tab="<%= name %>"
+  aria-selected="<%= aria_selected %>"
+  type="button"
+  role="tab"
+  aria-controls="<%= aria_controls %>"
+  id="<%= id %>"
+  data-action="click->tabs#switch keydown->tabs#keydown"
+>
+  <%= content %>
+</button>

@@ -1,43 +1,74 @@
-<main class="flex flex-col h-screen bg-white">
-
-  <header class="border-b px-6 py-4 flex items-center justify-between bg-white flex-shrink-0">
+<main class="h-screen bg-white flex flex-col" data-controller="tabs">
+  <header class="border-b px-6 py-4 bg-white">
     <div class="flex items-center gap-4">
       <%= link_to songs_path, class: "text-gray-400 hover:text-gray-600 transition-colors" do %>
         <%= render "songs/icons/back_icon" %>
       <% end %>
-      <h1 class="text-xl font-bold text-gray-900"><%= @song.title %></h1>
-    </div>
-    <div class="flex items-center gap-3">
-      <button disabled class="px-4 py-2 text-sm font-medium text-gray-400 bg-gray-100 border border-gray-200 rounded-md cursor-not-allowed">Compare</button>
 
-      <button type="submit" form="editor-form" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-        Save Version
-      </button>
+      <h1 class="text-xl font-bold text-gray-900"><%= @song.title %></h1>
     </div>
   </header>
 
-  <div class="flex-1 flex overflow-hidden">
-    <%= render "lyric_editor", song: @song, branch_name: @branch_name, current_content: @current_content %>
+  <div class="hidden md:flex overflow-hidden flex-1">
+    <div class="flex-1">
+      <%= render "lyric_editor", song: @song, current_branch_name: @current_branch_name, current_content: @current_content %>
+    </div>
 
-    <aside class="w-80 border-l bg-gray-50 flex flex-col flex-shrink-0" data-controller="tabs">
+    <div class="w-80"><%= render "history_panel", commits: @commits %></div>
 
-      <div class="flex border-b bg-white flex-shrink-0">
-        <button data-tabs-target="tab" data-action="click->tabs#switch" data-tab="history" class="flex-1 py-3 text-sm font-medium text-center border-b-2 transition-colors">History</button>
-        <button data-tabs-target="tab" data-action="click->tabs#switch" data-tab="branches" class="flex-1 py-3 text-sm font-medium text-center border-b-2 transition-colors">Branches</button>
-      </div>
-
-
-      <div class="flex-1 overflow-y-auto">
-        <div data-tabs-target="panel" data-panel="history" class="p-4">
-          <%= render "history_panel", commits: @commits %>
-        </div>
-
-
-        <div data-tabs-target="panel" data-panel="branches" class="hidden p-4">
-          <%= render "branches_panel", branches: @branches, song: @song, branch_name: @branch_name %>
-        </div>
-      </div>
-    </aside>
+    <div class="w-64">
+      <%= render "branches_panel", branches: @branches, song: @song, current_branch_name: @current_branch_name %>
+    </div>
   </div>
 
+  <div class="overflow-hidden md:hidden flex-1 flex flex-col">
+    <div
+      class="
+        flex border-b border-gray-200 text-sm font-medium text-gray-500
+        bg-white
+      "
+      role="tablist"
+    >
+      <%= render "shared/tabs_button", aria_selected: true, name: "editor", content: "Editor", aria_controls: "editor-panel", id: "editor-tab" %>
+
+      <%= render "shared/tabs_button", name: "history", content: "History", aria_controls: "history-panel", id: "history-tab" %>
+
+      <%= render "shared/tabs_button", name: "branches", content: "Branches", aria_controls: "branches-panel", id: "branches-tab" %>
+    </div>
+
+    <div class="size-full overflow-hidden">
+      <div
+        class="size-full"
+        data-tabs-target="panel"
+        data-panel="editor"
+        id="editor-panel"
+        role="tabpanel"
+        aria-labelledby="editor-tab"
+      >
+        <%= render "lyric_editor", song: @song, current_branch_name: @current_branch_name, current_content: @current_content %>
+      </div>
+
+      <div
+        class="hidden size-full"
+        data-tabs-target="panel"
+        data-panel="history"
+        id="history-panel"
+        role="tabpanel"
+        aria-labelledby="history-tab"
+      >
+        <%= render "history_panel", commits: @commits %>
+      </div>
+
+      <div
+        class="hidden size-full"
+        data-tabs-target="panel"
+        data-panel="branches"
+        id="branches-panel"
+        role="tabpanel"
+        aria-labelledby="branches-tab"
+      >
+        <%= render "branches_panel", branches: @branches, song: @song, current_branch_name: @current_branch_name %>
+      </div>
+    </div>
+  </div>
 </main>

@@ -1,20 +1,50 @@
-<%# locals: (branches:, song:, branch_name:) %>
-<div class="space-y-2">
-  <% branches.each do |branch| %>
-    <%= link_to song_path(song, branch: branch.name),
-                class: "group block p-3 rounded-lg border transition-all #{branch.name == branch_name ? 'bg-blue-50 border-blue-200 shadow-sm' : 'bg-white border-gray-200 hover:border-blue-300 hover:shadow-sm'}" do %>
-      <div class="flex justify-between items-center mb-1">
-           <span class="text-sm font-medium <%= branch.name == branch_name ? 'text-blue-900' : 'text-gray-900' %>">
-             <%= branch.name %>
-           </span>
-        <% if branch.name == branch_name %>
-          <span class="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide text-blue-700 bg-blue-100 rounded-full">Current</span>
-        <% end %>
-      </div>
-      <div class="flex items-center gap-2 text-xs text-gray-500">
-        <%= render "songs/icons/update_icon" %>
-        <span>Updated <%= time_ago_in_words(branch.updated_at) %> ago</span>
-      </div>
+<%# locals: (branches:, song:, current_branch_name:) %>
+<div class="h-full overflow-y-auto bg-white">
+  <div class="sticky top-0 bg-white z-10 p-4">
+    <h3 class="text-sm font-semibold text-gray-900 mb-2">
+      Branches
+    </h3>
+
+    <div class="border-b border-gray-100">
+      <%= form_with url: song_branches_path(song), method: :post, class: "flex flex-col gap-3" do |f| %>
+        <%= f.hidden_field :source_branch, value: current_branch_name %>
+
+        <%= f.text_field :name, 
+        placeholder: "New branch name...", 
+        class: "w-full px-3 py-2 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
+        required: true %>
+
+        <%= f.button "Create Branch", class: "w-full px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 transition-colors shadow-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500" %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="px-4 pb-6 space-y-2">
+    <% branches.each do |branch| %>
+      <%= link_to song_path(song, branch: branch.name),
+                class: "group block p-3 rounded-lg border transition-all #{branch.name == current_branch_name ? 'bg-blue-50 border-blue-200 shadow-sm' : 'bg-white border-gray-200 hover:border-blue-300 hover:shadow-sm'}" do %>
+        <div class="flex justify-between items-center mb-1">
+          <span class="text-sm font-medium <%= branch.name == current_branch_name ? 'text-blue-900' : 'text-gray-900' %>">
+            <%= branch.name %>
+          </span>
+
+          <% if branch.name == current_branch_name %>
+            <span
+              class="
+                px-2 py-0.5 text-[10px] font-bold uppercase tracking-wide
+                text-blue-700 bg-blue-100 rounded-full
+              "
+            >
+              Current
+            </span>
+          <% end %>
+        </div>
+
+        <div class="flex items-center gap-2 text-xs text-gray-500">
+          <%= render "songs/icons/update_icon" %>
+          <span>Updated <%= time_ago_in_words(branch.updated_at) %> ago</span>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>

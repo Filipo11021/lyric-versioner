@@ -1,0 +1,7 @@
+{
+  // Support for Rails helpers like form_with, link_to
+  "tailwindCSS.experimental.classRegex": [
+    "class:\\s*\"([^\"]*)\"",
+    "class:\\s*'([^']*)'"
+  ]
+}

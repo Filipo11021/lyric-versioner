@@ -1,17 +1,26 @@
-<%# locals: (song:, branch_name:, current_content:) %>
-<main class="flex-1 flex flex-col min-w-0 relative">
-  <%= form_with url: song_path(song, branch: branch_name), method: :patch, id: "editor-form", class: "flex-1 flex flex-col h-full" do |f| %>
+<%# locals: (song:, current_branch_name:, current_content:) %>
+<div class="flex-1 flex flex-col">
+  <%= form_with url: song_path(song, branch: current_branch_name), method: :patch, id: "editor-form", class: "flex-1 flex flex-col h-full" do |f| %>
     <%= f.text_area :content,
                     value: current_content,
                     class: "flex-1 w-full p-8 text-lg leading-relaxed text-gray-800 resize-none focus:outline-none font-mono placeholder-gray-300",
                     placeholder: "Start writing your lyrics here..." %>
   <% end %>
 
-  <div class="px-8 py-3 border-t bg-white text-xs text-gray-400 flex justify-between items-center flex-shrink-0">
-    <span class="font-mono"><%= current_content.lines.count %> lines · <%= current_content.length %> characters</span>
+  <div
+    class="
+      px-8 py-3 border-t bg-white text-xs text-gray-400 flex justify-between
+      items-center flex-shrink-0
+    "
+  >
+    <span class="font-mono">
+      <%= current_content.lines.count %> lines · <%= current_content.length %>
+      characters
+    </span>
+
     <div class="flex items-center gap-2">
       <span class="w-2 h-2 rounded-full bg-green-500"></span>
-      <span><%= branch_name %></span>
+      <span><%= current_branch_name %></span>
     </div>
   </div>
-</main>
+</div>
