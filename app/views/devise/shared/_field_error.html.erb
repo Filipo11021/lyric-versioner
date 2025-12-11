@@ -1,0 +1,4 @@
+<%# locals: (name:) %>
+<% if resource.errors[name].any? %>
+  <div class="devise-error"><%= resource.errors[name].join(", ") %></div>
+<% end %>

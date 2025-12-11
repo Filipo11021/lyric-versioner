@@ -1,1 +1,102 @@
 @import "tailwindcss";
+
+@layer components {
+  .devise-form {
+    display: flex;
+    flex-direction: column;
+    gap: calc(var(--spacing) * 4);
+  }
+
+  .devise-label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: var(--font-medium);
+    color: var(--color-gray-700);
+    margin-bottom: calc(var(--spacing) * 1);
+  }
+
+  .devise-input[type="text"],
+  .devise-input[type="email"],
+  .devise-input[type="password"] {
+    appearance: none;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-md);
+    width: 100%;
+    padding: calc(var(--spacing) * 2) calc(var(--spacing) * 3);
+    color: var(--color-gray-700);
+    line-height: var(--leading-tight);
+    box-shadow: var(--shadow);
+
+    &:focus {
+      outline: none;
+      box-shadow: var(--shadow-md);
+    }
+  }
+
+  .devise-input[type="checkbox"] {
+    width: 1.1em;
+    height: 1.1em;
+    border: 1px solid var(--color-gray-300);
+    border-radius: var(--radius-sm);
+    appearance: none;
+    vertical-align: middle;
+    background-color: var(--color-white);
+    cursor: pointer;
+    margin-right: calc(var(--spacing) * 1);
+
+    &:checked {
+      background-color: var(--color-blue-500);
+      border-color: var(--color-blue-500);
+    }
+
+    &:focus {
+      outline: 2px solid var(--color-blue-400);
+      outline-offset: 2px;
+    }
+  }
+
+  .devise-button {
+    font-weight: var(--font-bold);
+    padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
+    border-radius: var(--radius-md);
+  }
+
+  .devise-button-primary {
+    background-color: var(--color-blue-500);
+    color: var(--color-white);
+    font-weight: var(--font-bold);
+    padding: calc(var(--spacing) * 2) calc(var(--spacing) * 4);
+    border-radius: var(--radius-md);
+
+    &:hover {
+      background-color: var(--color-blue-700);
+    }
+  }
+
+  .devise-error {
+    color: var(--color-red-600);
+    font-size: var(--text-sm);
+    margin-top: calc(var(--spacing) * 1);
+  }
+
+  .devise-notice {
+    color: var(--color-green-600);
+    font-size: var(--text-sm);
+    margin-top: calc(var(--spacing) * 1);
+  }
+
+  .devise-layout {
+    width: 100%;
+    max-width: var(--container-xs);
+    margin-left: auto;
+    margin-right: auto;
+    padding: calc(var(--spacing) * 4);
+    margin-top: calc(var(--spacing) * 10);
+  }
+
+  .devise-heading {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-bold);
+    margin-bottom: calc(var(--spacing) * 6);
+  }
+}

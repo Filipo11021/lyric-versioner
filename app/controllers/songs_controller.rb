@@ -1,10 +1,10 @@
 class SongsController < ApplicationController
   def index
-    @songs = Song.all
+    @songs = current_user.songs
   end
 
   def show
-    @song = Song.find(params[:id])
+    @song = current_user.songs.find(params[:id])
     @current_branch_name = params[:branch].presence || "main"
     @current_branch = @song.branches.find_by(name: @current_branch_name)
 
@@ -19,12 +19,18 @@ class SongsController < ApplicationController
   end
 
   def update
-    @song = Song.find(params[:id])
+    @song = current_user.songs.find(params[:id])
+    if @song.blank?
+      redirect_to songs_path, alert: "Song not found"
+      return
+    end
+
     @current_branch_name = params[:branch].presence
     if @current_branch_name.blank?
       redirect_to song_path(@song), alert: "Branch not found"
       return
     end
+
     @current_branch = @song.branches.find_by(name: @current_branch_name)
 
     if @current_branch

@@ -1,0 +1,7 @@
+<%# locals: (f:, name:, type:, autocomplete:, autofocus:) %>
+<div>
+  <%= f.label name, class: "devise-label" %>
+  <%= f.send(type, name, autofocus: autofocus || true, autocomplete: autocomplete, class: "devise-input") %>
+
+  <%= render "devise/shared/field_error", name: name %>
+</div>

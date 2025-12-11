@@ -1,6 +1,6 @@
 class BranchesController < ApplicationController
   def create
-    @song = Song.find(params[:song_id])
+    @song = current_user.songs.find(params[:song_id])
     source_branch = @song.branches.find_by(name: params[:source_branch])
 
     if source_branch

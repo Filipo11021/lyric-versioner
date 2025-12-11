@@ -1,5 +1,5 @@
 <main class="h-screen bg-white flex flex-col" data-controller="tabs">
-  <header class="border-b px-6 py-4 bg-white">
+  <header class="border-b px-6 py-4 bg-white flex justify-between items-center">
     <div class="flex items-center gap-4">
       <%= link_to songs_path, class: "text-gray-400 hover:text-gray-600 transition-colors" do %>
         <%= render "songs/icons/back_icon" %>
@@ -7,6 +7,8 @@
 
       <h1 class="text-xl font-bold text-gray-900"><%= @song.title %></h1>
     </div>
+
+    <%= render "shared/logout_button" %>
   </header>
 
   <div class="hidden md:flex overflow-hidden flex-1">

@@ -1,0 +1,62 @@
+<div class="devise-layout">
+  <h2 class="devise-heading">Edit <%= resource_name.to_s.humanize %></h2>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, class: "devise-form" }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div>
+      <%= f.label :email, class: "devise-label" %>
+      <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "devise-input" %>
+    </div>
+
+    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+      <div>
+        Currently waiting confirmation for: <%= resource.unconfirmed_email %>
+      </div>
+    <% end %>
+
+    <div>
+      <%= f.label :password, class: "devise-label" %>
+
+      <span class="text-gray-500 text-xs">
+        (leave blank if you don't want to change it)
+      </span>
+
+      <%= f.password_field :password, autocomplete: "new-password", class: "devise-input" %>
+
+      <% if @minimum_password_length %>
+        <span class="text-gray-500 text-xs">
+          <%= @minimum_password_length %> characters minimum
+        </span>
+      <% end %>
+    </div>
+
+    <div>
+      <%= f.label :password_confirmation, class: "devise-label" %>
+      <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "devise-input" %>
+    </div>
+
+    <div>
+      <%= f.label :current_password, class: "devise-label" %>
+
+      <%= f.password_field :current_password, autocomplete: "current-password", class: "devise-input" %>
+
+      <span class="text-gray-500 text-xs">
+        (we need your current password to confirm your changes)
+      </span>
+    </div>
+
+    <div class="flex gap-4 justify-between">
+      <%= f.submit "Update", class: "devise-button devise-button-primary" %>
+
+      <%= link_to "Back", :back, class: "devise-button devise-button-primary" %>
+    </div>
+  <% end %>
+
+  <div class="flex flex-col gap-4 mt-16">
+    <h3 class="text-2xl">Cancel my account</h3>
+
+    <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, 
+    class: "devise-button devise-button-primary w-full" %>
+  </div>
+</div>
