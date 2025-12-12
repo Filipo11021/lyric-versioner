@@ -3,9 +3,29 @@
 </header>
 
 <main class="container mx-auto md:mt-28 px-6 py-8">
-  <h1 class="text-3xl font-bold text-gray-900 mb-8">Songs</h1>
+  <div class="flex items-center justify-between mb-8">
+    <h1 class="text-3xl font-bold text-gray-900">Songs</h1>
+
+    <button
+      onclick="document.getElementById('new-song-dialog').showModal()"
+      class="
+        px-4 py-2 text-sm font-medium text-white bg-blue-500 rounded-md
+        hover:bg-blue-600
+      "
+    >
+      + New Song
+    </button>
+  </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
     <%= render partial: "songs/card", collection: @songs, as: :song %>
   </div>
 </main>
+
+<dialog
+  id="new-song-dialog"
+  class="m-auto p-6 rounded-lg shadow-xl backdrop:bg-black/50 w-full max-w-md"
+>
+  <h2 class="text-xl font-semibold text-gray-900 mb-4">Create New Song</h2>
+  <%= render "songs/new_song_form", song: Song.new %>
+</dialog>

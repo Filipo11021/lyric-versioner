@@ -44,4 +44,19 @@ class SongsController < ApplicationController
       redirect_to song_path(@song), alert: "Branch not found"
     end
   end
+
+  def create
+    @song = current_user.songs.build(create_song_params)
+    if @song.save
+      redirect_to song_path(@song), status: :see_other
+    else
+      render turbo_stream: turbo_stream.replace("new_song_form", partial: "songs/new_song_form", locals: { song: @song }), status: :unprocessable_entity
+    end
+  end
+
+  private
+
+  def create_song_params
+    params.require(:song).permit(:title)
+  end
 end
