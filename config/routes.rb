@@ -12,7 +12,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root to: redirect("/songs")
-  resources :songs, only: [ :index, :show, :update, :create ] do
+  resources :songs, only: [ :index, :show, :update, :create, :destroy ] do
     resources :branches, only: [ :create ]
   end
 end

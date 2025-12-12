@@ -54,6 +54,12 @@ class SongsController < ApplicationController
     end
   end
 
+  def destroy
+    @song = current_user.songs.find_by(id: params[:id])
+    @song&.destroy
+    redirect_to songs_path, status: :see_other
+  end
+
   private
 
   def create_song_params
