@@ -13,10 +13,12 @@
 
   <div class="hidden md:flex overflow-hidden flex-1">
     <div class="flex-1">
-      <%= render "lyric_editor", song: @song, current_branch_name: @current_branch_name, current_content: @current_content %>
+      <%= render "lyric_editor", song: @song, current_branch_name: @current_branch_name, current_content: @current_content, form_id: "editor-form-desktop" %>
     </div>
 
-    <div class="w-80"><%= render "history_panel", commits: @commits %></div>
+    <div class="w-80">
+      <%= render "history_panel", commits: @commits, form_id: "editor-form-desktop" %>
+    </div>
 
     <div class="w-64">
       <%= render "branches_panel", branches: @branches, song: @song, current_branch_name: @current_branch_name %>
@@ -47,7 +49,7 @@
         role="tabpanel"
         aria-labelledby="editor-tab"
       >
-        <%= render "lyric_editor", song: @song, current_branch_name: @current_branch_name, current_content: @current_content %>
+        <%= render "lyric_editor", song: @song, current_branch_name: @current_branch_name, current_content: @current_content, form_id: "editor-form-mobile" %>
       </div>
 
       <div
@@ -58,7 +60,7 @@
         role="tabpanel"
         aria-labelledby="history-tab"
       >
-        <%= render "history_panel", commits: @commits %>
+        <%= render "history_panel", commits: @commits, form_id: "editor-form-mobile" %>
       </div>
 
       <div
