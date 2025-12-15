@@ -28,7 +28,7 @@ jobs:
       - name: Install dependencies
         run: gem install kamal
 
-      - uses: webfactory/ssh-agent@v0.9.0
+      - uses: webfactory/ssh-agent@v0.9.1
         with:
           ssh-private-key: ${{ env.KAMAL_SSH_PRIVATE_KEY }}
 
