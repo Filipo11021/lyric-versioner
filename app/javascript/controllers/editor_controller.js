@@ -38,8 +38,10 @@ export default class extends Controller {
   static values = { originalContent: String };
 
   connect() {
-    this.originalContent = this.originalContentValue.split("\n");
-    this.inputTarget.value = this.originalContentValue;
+    const originalValue = this.originalContentValue;
+    this.originalContent =
+      originalValue === "" ? [] : originalValue.split("\n");
+    this.inputTarget.value = originalValue;
 
     this.updateDiffStatus();
     this.syncScroll();
@@ -57,7 +59,8 @@ export default class extends Controller {
    * @returns {string[]}
    */
   getCurrentLines() {
-    return this.inputTarget.value.split("\n");
+    const value = this.inputTarget.value;
+    return value === "" ? [] : value.split("\n");
   }
 
   /**
